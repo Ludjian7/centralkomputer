@@ -6,9 +6,7 @@ import {
   Box,
   Grid,
   Card,
-  CardContent,
   CardActionArea,
-  Button,
   Divider,
   Breadcrumbs,
   Link,
@@ -16,7 +14,6 @@ import {
   useTheme,
   useMediaQuery
 } from '@mui/material';
-import AssessmentIcon from '@mui/icons-material/Assessment';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import PeopleIcon from '@mui/icons-material/People';
 import ReceiptIcon from '@mui/icons-material/Receipt';
@@ -26,14 +23,9 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import InsightsIcon from '@mui/icons-material/Insights';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import { themeColors } from '../../components/Layout/LayoutStyles';
 
 const ReportsHome = () => {
   const location = useLocation();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   
   const isTransactionsReport = location.pathname === '/reports/transactions';
   const isSuppliersReport = location.pathname === '/reports/suppliers';

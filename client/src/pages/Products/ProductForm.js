@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Box, 
   Typography, 
@@ -52,19 +52,18 @@ const ProductForm = () => {
   const [submitError, setSubmitError] = useState(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  useEffect(() => {
-    // Fetch suppliers for dropdown
-    const fetchSuppliers = async () => {
-      try {
-        const response = await axios.get('/api/suppliers');
-        if (response.data.success) {
-          setSuppliers(response.data.data);
-        }
-      } catch (error) {
-        console.error('Error fetching suppliers:', error);
+  const fetchSuppliers = useCallback(async () => {
+    try {
+      const response = await axios.get('/api/suppliers');
+      if (response.data.success) {
+        setSuppliers(response.data.data);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching suppliers:', error);
+    }
+  }, []);
 
+  useEffect(() => {
     fetchSuppliers();
 
     // If in edit mode, fetch product data
@@ -106,7 +105,7 @@ const ProductForm = () => {
 
       fetchProduct();
     }
-  }, [id, isEditMode]);
+  }, [id, isEditMode, fetchSuppliers]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

@@ -3,7 +3,6 @@ import { useParams, useNavigate, Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Button,
-  Card,
   CardContent,
   Container,
   Divider,
