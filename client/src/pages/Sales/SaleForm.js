@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate, useParams, Link as RouterLink } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Box,
   Button,
-  Card,
   CardContent,
   Container,
   Divider,
@@ -36,7 +35,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import NoteIcon from '@mui/icons-material/Note';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import axios from 'axios';
-import { StyledStatCard, StyledDetailCard, themeColors, layoutGradients } from '../../components/Layout/LayoutStyles';
+import { StyledDetailCard, themeColors, layoutGradients } from '../../components/Layout/LayoutStyles';
 
 const PAYMENT_METHODS = ['cash', 'credit_card', 'bank_transfer', 'digital_wallet'];
 const PAYMENT_STATUSES = ['paid', 'pending', 'canceled'];

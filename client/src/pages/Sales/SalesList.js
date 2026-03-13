@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
@@ -38,7 +38,7 @@ const SalesList = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const fetchSales = async () => {
+  const fetchSales = useCallback(async () => {
     setLoading(true);
     try {
       const response = await axios.get(`/api/sales?page=${page + 1}&limit=${rowsPerPage}`);
@@ -51,11 +51,11 @@ const SalesList = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, rowsPerPage]);
 
   useEffect(() => {
     fetchSales();
-  }, [page, rowsPerPage]);
+  }, [fetchSales]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
