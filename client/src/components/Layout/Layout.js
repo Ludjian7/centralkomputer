@@ -122,17 +122,16 @@ const Layout = () => {
             transform: 'translateY(-50%)',
             zIndex: 1400,
             '& .MuiDrawer-paper': {
-              position: 'static',
               width: drawerWidth,
               minWidth: '160px',
               maxWidth: `${sidebarWidth}px`,
               boxSizing: 'border-box',
               backgroundColor: 'rgba(61, 211, 123, 0.1)',
               color: '#232E3F',
-              borderRadius: { xs: '8px', sm: '12px', md: '16px' }, // Flexible border radius
+              borderRadius: { xs: '8px', sm: '12px', md: '16px' },
               boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.1)',
-              border: '2px solid transparent', // Transparent base border
-              position: 'relative', // Position relative for pseudo-element
+              border: '2px solid transparent',
+              position: 'relative',
               '&::before': {
                 content: '""',
                 position: 'absolute',
@@ -141,8 +140,8 @@ const Layout = () => {
                 right: 0,
                 bottom: 0,
                 borderRadius: { xs: '8px', sm: '12px', md: '16px' },
-                padding: '2px', // Border width
-                background: 'linear-gradient(135deg, #FE7102, #3DD37B, #6495ED, #9370DB)', // Multiple colors gradient
+                padding: '2px',
+                background: 'linear-gradient(135deg, #FE7102, #3DD37B, #6495ED, #9370DB)',
                 mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
                 maskComposite: 'exclude',
                 WebkitMaskComposite: 'xor',
@@ -157,13 +156,14 @@ const Layout = () => {
                 '75%': { background: 'linear-gradient(45deg, #FE7102, #3DD37B, #6495ED, #9370DB)' },
                 '100%': { background: 'linear-gradient(135deg, #FE7102, #3DD37B, #6495ED, #9370DB)' },
               },
-              height: 'auto', // Auto height based on content
-              maxHeight: 'none', // Removing the height limit
-              overflowY: 'visible', // Removing scroll functionality
-              marginLeft: '20px', // Fixed margin from the left edge
+              height: 'auto',
+              maxHeight: 'none',
+              overflowY: 'visible',
+              marginLeft: '20px',
               transition: 'all 0.3s ease',
               padding: 0,
             },
+
           }}
         >
           <Box sx={{

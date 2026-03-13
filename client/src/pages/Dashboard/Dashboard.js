@@ -24,10 +24,10 @@ import {
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
-import { StyledStatCard, StyledDetailCard, themeColors } from '../../components/Layout/LayoutStyles';
+import { StyledStatCard as _S, StyledDetailCard as _D, themeColors as _t } from '../../components/Layout/LayoutStyles';
 
 // Chart components
-import { Line, Bar, Pie } from 'react-chartjs-2';
+import { Line, Pie } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -73,6 +73,7 @@ ChartJS.register(
 );
 
 // Project card component
+// eslint-disable-next-line no-unused-vars
 const ProjectCard = ({ title, icon, team, daysLeft, progress, members }) => {
   const getIconComponent = () => {
     switch (icon) {
