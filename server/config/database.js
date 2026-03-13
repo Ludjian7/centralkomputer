@@ -1,4 +1,5 @@
 const { Sequelize } = require('sequelize');
+require('pg'); // Explicitly require for Vercel bundler detection
 require('dotenv').config();
 
 const dbUrl = process.env.POSTGRES_URL;
@@ -6,6 +7,7 @@ const dbUrl = process.env.POSTGRES_URL;
 const sequelize = dbUrl
   ? new Sequelize(dbUrl, {
       dialect: 'postgres',
+      dialectModule: require('pg'),
       dialectOptions: {
         ssl: {
           require: true,
@@ -14,6 +16,7 @@ const sequelize = dbUrl
       },
       logging: false
     })
+
   : new Sequelize({
       dialect: 'sqlite',
       storage: './database-toko.sqlite',
