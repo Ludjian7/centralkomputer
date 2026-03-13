@@ -3,17 +3,13 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
-// Routes
-const routes = require('./server/routes');
-
-
 // Initialize Express
 const app = express();
 const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(cors({
-  origin: '*', // More permissive for initial troubleshooting
+  origin: '*',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -21,24 +17,36 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health Check (Always reachable)
+// 1. Health Check - Top Priority (No dependencies)
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Server is running', time: new Date() });
+  res.json({ 
+    status: 'ok', 
+    message: 'Server is running', 
+    env: process.env.NODE_ENV,
+    hasDbUrl: !!process.env.POSTGRES_URL,
+    time: new Date() 
+  });
 });
 
-// Skip auto DB init in production to avoid cold-start timeouts
-if (process.env.NODE_ENV !== 'production') {
-  const { testConnection } = require('./server/config/database');
-  const { syncModels } = require('./server/models');
-  testConnection().then(connected => {
-    if (connected) syncModels();
-  });
-}
-
-
-
-// API Routes
-app.use('/api', routes);
+// 2. Delayed Route Loading (Isolates crashes in controllers/models)
+app.use('/api', (req, res, next) => {
+  try {
+    // Only require once and cache it
+    if (!app.get('routes_loaded')) {
+      app.set('routes_instance', require('./server/routes'));
+      app.set('routes_loaded', true);
+    }
+    app.get('routes_instance')(req, res, next);
+  } catch (err) {
+    console.error('CRITICAL ERROR LOADING ROUTES:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to load application routes',
+      error: err.message,
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    });
+  }
+});
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
@@ -49,13 +57,12 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// Basic error handler
+// Global error handler
 app.use((err, req, res, next) => {
   console.error('Unhandled Error:', err);
   res.status(500).json({
     success: false,
-    message: 'Internal Server Error',
-    error: process.env.NODE_ENV === 'development' ? err.message : undefined
+    message: 'Internal Server Error'
   });
 });
 
@@ -67,4 +74,5 @@ if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
 }
 
 module.exports = app;
+
  
