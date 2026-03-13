@@ -13,7 +13,7 @@ import {
   Alert
 } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../config/api';
 
 // Icons
 import EditIcon from '@mui/icons-material/Edit';
@@ -33,7 +33,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`/api/products/${id}`);
+        const response = await api.get(`/api/products/${id}`);
         if (response.data.success) {
           setProduct(response.data.data);
         } else {
@@ -53,7 +53,7 @@ const ProductDetail = () => {
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
-        const response = await axios.delete(`/api/products/${id}`);
+        const response = await api.delete(`/api/products/${id}`);
         if (response.data.success) {
           navigate('/products');
         } else {

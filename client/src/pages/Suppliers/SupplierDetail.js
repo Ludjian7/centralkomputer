@@ -19,7 +19,7 @@ import {
   TableRow
 } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../config/api';
 
 // Icons
 import EditIcon from '@mui/icons-material/Edit';
@@ -36,7 +36,7 @@ const SupplierDetail = () => {
   useEffect(() => {
     const fetchSupplier = async () => {
       try {
-        const response = await axios.get(`/api/suppliers/${id}`);
+        const response = await api.get(`/api/suppliers/${id}`);
         if (response.data.success) {
           setSupplier(response.data.data);
         } else {
@@ -56,7 +56,7 @@ const SupplierDetail = () => {
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this supplier?')) {
       try {
-        const response = await axios.delete(`/api/suppliers/${id}`);
+        const response = await api.delete(`/api/suppliers/${id}`);
         if (response.data.success) {
           navigate('/suppliers');
         } else {

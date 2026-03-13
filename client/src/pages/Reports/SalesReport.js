@@ -43,7 +43,7 @@ import {
   Legend, 
   ResponsiveContainer 
 } from 'recharts';
-import axios from 'axios';
+import api from '../../config/api';
 import { format, subDays, startOfMonth, endOfMonth, isValid } from 'date-fns';
 
 // Chart colors
@@ -89,7 +89,7 @@ const SalesReport = () => {
       const formattedStartDate = format(startDate, 'yyyy-MM-dd');
       const formattedEndDate = format(endDate, 'yyyy-MM-dd');
       
-      const response = await axios.get('/api/sales/statistics', {
+      const response = await api.get('/api/sales/statistics', {
         params: {
           startDate: formattedStartDate,
           endDate: formattedEndDate

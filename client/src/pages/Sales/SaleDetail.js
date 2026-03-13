@@ -28,7 +28,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import PaymentIcon from '@mui/icons-material/Payment';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NoteIcon from '@mui/icons-material/Note';
-import axios from 'axios';
+import api from '../../config/api';
 import { format } from 'date-fns';
 import { StyledDetailCard, StyledStatCard, themeColors } from '../../components/Layout/LayoutStyles';
 
@@ -44,7 +44,7 @@ const SaleDetail = () => {
   useEffect(() => {
     const fetchSaleDetails = async () => {
       try {
-        const response = await axios.get(`/api/sales/${id}`);
+        const response = await api.get(`/api/sales/${id}`);
         setSale(response.data.data);
         setError(null);
       } catch (err) {
@@ -61,7 +61,7 @@ const SaleDetail = () => {
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this sale? This action cannot be undone.')) {
       try {
-        await axios.delete(`/api/sales/${id}`);
+        await api.delete(`/api/sales/${id}`);
         navigate('/sales');
       } catch (err) {
         console.error('Error deleting sale:', err);

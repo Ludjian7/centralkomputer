@@ -16,7 +16,7 @@ import {
   FormControlLabel
 } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../config/api';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
 import { StyledDetailCard, themeColors } from '../../components/Layout/LayoutStyles';
@@ -53,7 +53,7 @@ const ProductForm = () => {
 
   const fetchSuppliers = useCallback(async () => {
     try {
-      const response = await axios.get('/api/suppliers');
+      const response = await api.get('/api/suppliers');
       if (response.data.success) {
         setSuppliers(response.data.data);
       }
@@ -70,7 +70,7 @@ const ProductForm = () => {
       const fetchProduct = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(`/api/products/${id}`);
+          const response = await api.get(`/api/products/${id}`);
           if (response.data.success) {
             const product = response.data.data;
             setFormData({
@@ -190,10 +190,10 @@ const ProductForm = () => {
       
       if (isEditMode) {
         // Update existing product
-        response = await axios.put(`/api/products/${id}`, productData);
+        response = await api.put(`/api/products/${id}`, productData);
       } else {
         // Create new product
-        response = await axios.post('/api/products', productData);
+        response = await api.post('/api/products', productData);
       }
       
       if (response.data.success) {

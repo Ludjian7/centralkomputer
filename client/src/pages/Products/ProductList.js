@@ -18,7 +18,7 @@ import {
   Tab
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../config/api';
 import { StyledDetailCard, themeColors } from '../../components/Layout/LayoutStyles';
 
 // Icons
@@ -46,7 +46,7 @@ const ProductList = () => {
       if (activeTab !== 'all') {
         url += `?type=${activeTab}`;
       }
-      const response = await axios.get(url);
+      const response = await api.get(url);
       if (response.data.success) {
         setProducts(response.data.data);
       } else {
@@ -85,7 +85,7 @@ const ProductList = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
-        const response = await axios.delete(`/api/products/${id}`);
+        const response = await api.delete(`/api/products/${id}`);
         if (response.data.success) {
           setProducts(products.filter(product => product.id !== id));
         } else {

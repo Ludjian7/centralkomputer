@@ -22,7 +22,7 @@ import {
   useTheme
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../config/api';
 import { AuthContext } from '../../context/AuthContext';
 // LayoutStyles not imported (unused in this component)
 
@@ -201,13 +201,14 @@ const Dashboard = () => {
     setLoading(true);
     try {
       // Get sales statistics
-      const salesResponse = await axios.get(`/api/sales/statistics?timeRange=${timeRange}`);
+      const salesResponse = await api.get(`/api/sales/statistics?timeRange=${timeRange}`);
       if (salesResponse.data.success) {
         setSalesStats(salesResponse.data.data);
       }
       
       // Get low stock products
-      const productsResponse = await axios.get('/api/products/low-stock');
+      const productsResponse = await api.get('/api/products/low-stock');
+
       if (productsResponse.data.success) {
         setLowStockProducts(productsResponse.data.data);
       }

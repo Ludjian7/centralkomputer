@@ -10,7 +10,7 @@ import {
   Alert,
 } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../config/api';
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
@@ -24,7 +24,7 @@ const EmployeeDetail = () => {
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
-        const response = await axios.get(`/api/employees/${id}`);
+        const response = await api.get(`/api/employees/${id}`);
         if (response.data.success) {
           setEmployee(response.data.data);
         } else {

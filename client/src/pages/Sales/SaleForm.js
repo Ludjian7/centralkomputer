@@ -34,7 +34,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PersonIcon from '@mui/icons-material/Person';
 import NoteIcon from '@mui/icons-material/Note';
 import ReceiptIcon from '@mui/icons-material/Receipt';
-import axios from 'axios';
+import api from '../../config/api';
 import { StyledDetailCard, themeColors, layoutGradients } from '../../components/Layout/LayoutStyles';
 
 const PAYMENT_METHODS = ['cash', 'credit_card', 'bank_transfer', 'digital_wallet'];
@@ -70,7 +70,7 @@ const SaleForm = () => {
   // Fetch available products
   const fetchProducts = useCallback(async () => {
     try {
-      const response = await axios.get('/api/products');
+      const response = await api.get('/api/products');
       setProducts(response.data.data.filter(product => product.isActive));
     } catch (err) {
       console.error('Error fetching products:', err);
@@ -84,7 +84,7 @@ const SaleForm = () => {
     
     setLoading(true);
     try {
-      const response = await axios.get(`/api/sales/${id}`);
+      const response = await api.get(`/api/sales/${id}`);
       const saleData = response.data.data;
       
       // Format data for the form
@@ -245,9 +245,9 @@ const SaleForm = () => {
       console.log('Submitting sale data:', saleData);
 
       if (isEditing) {
-        await axios.put(`/api/sales/${id}`, saleData);
+        await api.put(`/api/sales/${id}`, saleData);
       } else {
-        await axios.post('/api/sales', saleData);
+        await api.post('/api/sales', saleData);
       }
 
       navigate('/sales');

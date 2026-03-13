@@ -25,7 +25,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import axios from 'axios';
+import api from '../../config/api';
 import { format } from 'date-fns';
 import { StyledDetailCard, themeColors } from '../../components/Layout/LayoutStyles';
 
@@ -41,7 +41,7 @@ const SalesList = () => {
   const fetchSales = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`/api/sales?page=${page + 1}&limit=${rowsPerPage}`);
+      const response = await api.get(`/api/sales?page=${page + 1}&limit=${rowsPerPage}`);
       setSales(response.data.data);
       setTotalCount(response.data.count);
       setError(null);
@@ -74,7 +74,7 @@ const SalesList = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this sale?')) {
       try {
-        await axios.delete(`/api/sales/${id}`);
+        await api.delete(`/api/sales/${id}`);
         fetchSales();
       } catch (err) {
         console.error('Error deleting sale:', err);

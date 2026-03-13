@@ -11,7 +11,7 @@ import {
   FormControlLabel
 } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../config/api';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
 
@@ -43,7 +43,7 @@ const SupplierForm = () => {
       const fetchSupplier = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(`/api/suppliers/${id}`);
+          const response = await api.get(`/api/suppliers/${id}`);
           if (response.data.success) {
             const supplier = response.data.data;
             setFormData({
@@ -124,10 +124,10 @@ const SupplierForm = () => {
       
       if (isEditMode) {
         // Update existing supplier
-        response = await axios.put(`/api/suppliers/${id}`, formData);
+        response = await api.put(`/api/suppliers/${id}`, formData);
       } else {
         // Create new supplier
-        response = await axios.post('/api/suppliers', formData);
+        response = await api.post('/api/suppliers', formData);
       }
       
       if (response.data.success) {

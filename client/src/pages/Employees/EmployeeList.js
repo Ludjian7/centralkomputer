@@ -17,7 +17,7 @@ import {
   Chip,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../config/api';
 
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -36,7 +36,7 @@ const EmployeeList = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get('/api/employees');
+        const response = await api.get('/api/employees');
         if (response.data.success) {
           setEmployees(response.data.data);
         } else {
@@ -69,7 +69,7 @@ const EmployeeList = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to deactivate this employee?')) {
       try {
-        const response = await axios.delete(`/api/employees/${id}`);
+        const response = await api.delete(`/api/employees/${id}`);
         if (response.data.success) {
           setEmployees((prev) =>
             prev.map((emp) =>

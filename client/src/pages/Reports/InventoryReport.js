@@ -29,7 +29,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import axios from 'axios';
+import api from '../../config/api';
 import ReportsNav from './ReportsNav';
 
 const InventoryReport = () => {
@@ -57,7 +57,7 @@ const InventoryReport = () => {
     setError(null);
     
     try {
-      const response = await axios.get('/api/products');
+      const response = await api.get('/api/products');
       if (response.data.success) {
         const productsData = response.data.data;
         setProducts(productsData);

@@ -17,7 +17,7 @@ import {
   Chip
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../config/api';
 
 // Icons
 import AddIcon from '@mui/icons-material/Add';
@@ -37,7 +37,7 @@ const SupplierList = () => {
   useEffect(() => {
     const fetchSuppliers = async () => {
       try {
-        const response = await axios.get('/api/suppliers');
+        const response = await api.get('/api/suppliers');
         if (response.data.success) {
           setSuppliers(response.data.data);
         } else {
@@ -70,7 +70,7 @@ const SupplierList = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this supplier?')) {
       try {
-        const response = await axios.delete(`/api/suppliers/${id}`);
+        const response = await api.delete(`/api/suppliers/${id}`);
         if (response.data.success) {
           setSuppliers(suppliers.filter(supplier => supplier.id !== id));
         } else {

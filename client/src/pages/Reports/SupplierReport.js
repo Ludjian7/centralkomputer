@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../config/api';
 import {
   Container,
   Typography,
@@ -52,7 +52,7 @@ const SupplierReport = () => {
         params.onlyActive = true;
       }
 
-      const response = await axios.get('/api/suppliers/report', { params });
+      const response = await api.get('/api/suppliers/report', { params });
 
       if (response.data.success) {
         setSummary(response.data.summary || {});

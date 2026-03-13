@@ -25,7 +25,7 @@ import {
 import { DatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import axios from 'axios';
+import api from '../../config/api';
 import { format, subDays, isValid } from 'date-fns';
 import ReportsNav from './ReportsNav';
 
@@ -119,7 +119,7 @@ const TransactionsReport = () => {
         params.paymentStatus = paymentStatus;
       }
 
-      const response = await axios.get('/api/sales/transactions', {
+      const response = await api.get('/api/sales/transactions', {
         params,
       });
 
