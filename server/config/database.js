@@ -1,8 +1,10 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-const sequelize = process.env.POSTGRES_URL
-  ? new Sequelize(process.env.POSTGRES_URL + "?sslmode=require", {
+const dbUrl = process.env.POSTGRES_URL;
+
+const sequelize = dbUrl
+  ? new Sequelize(dbUrl, {
       dialect: 'postgres',
       dialectOptions: {
         ssl: {
@@ -22,7 +24,7 @@ const sequelize = process.env.POSTGRES_URL
 const testConnection = async () => {
   try {
     await sequelize.authenticate();
-    console.log('Database connection has been established successfully.');
+    console.log('Database connection established successfully.');
     return true;
   } catch (error) {
     console.error('Unable to connect to the database:', error.message);
@@ -33,4 +35,5 @@ const testConnection = async () => {
 module.exports = {
   sequelize,
   testConnection
-}; 
+};
+ 

@@ -6,8 +6,6 @@ const supplierRoutes = require('./supplierRoutes');
 const saleRoutes = require('./saleRoutes');
 const employeeRoutes = require('./employeeRoutes');
 
-const { User, syncModels } = require('../models');
-
 // Mount routes
 router.use('/auth', authRoutes);
 router.use('/products', productRoutes);
@@ -18,9 +16,11 @@ router.use('/employees', employeeRoutes);
 // Database initialization route (one-time use)
 router.get('/init-db', async (req, res) => {
   try {
+    const { User, syncModels } = require('../models');
     const results = [];
     
     // 1. Sync database (Create tables if missing)
+
     results.push('Synchronizing database...');
     const synced = await syncModels();
     if (!synced) {
