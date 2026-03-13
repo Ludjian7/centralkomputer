@@ -66,9 +66,11 @@ export const layoutGradients = {
   pageContainer: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 250, 0.95) 100%)'
 };
 
-export default {
+const LayoutStylesExports = {
   StyledStatCard,
   StyledDetailCard,
   themeColors,
   layoutGradients
-}; 
+};
+
+export default LayoutStylesExports; 

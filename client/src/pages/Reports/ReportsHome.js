@@ -11,8 +11,8 @@ import {
   Breadcrumbs,
   Link,
   Paper,
-  useTheme,
-  useMediaQuery
+  useTheme as _useTheme,
+  useMediaQuery as _useMediaQuery
 } from '@mui/material';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import PeopleIcon from '@mui/icons-material/People';

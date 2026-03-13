@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Outlet, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import {
@@ -132,7 +132,6 @@ const Layout = () => {
               borderRadius: { xs: '8px', sm: '12px', md: '16px' }, // Flexible border radius
               boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.1)',
               border: '2px solid transparent', // Transparent base border
-              backgroundClip: 'padding-box', // Ensures background doesn't overlap border
               position: 'relative', // Position relative for pseudo-element
               '&::before': {
                 content: '""',

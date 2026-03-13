@@ -10,9 +10,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  List,
-  ListItem,
-  ListItemText,
   Alert
 } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';

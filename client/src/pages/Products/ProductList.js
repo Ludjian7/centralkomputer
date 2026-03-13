@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Box, 
   Typography, 
   Button, 
-  Paper, 
   Table, 
   TableBody, 
   TableCell, 
@@ -40,20 +39,13 @@ const ProductList = () => {
   const [activeTab, setActiveTab] = useState('all');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchProducts();
-  }, [activeTab]);
-
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
       let url = '/api/products';
-      
-      // Add type filter if not showing all
       if (activeTab !== 'all') {
         url += `?type=${activeTab}`;
       }
-      
       const response = await axios.get(url);
       if (response.data.success) {
         setProducts(response.data.data);
@@ -65,7 +57,11 @@ const ProductList = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeTab]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

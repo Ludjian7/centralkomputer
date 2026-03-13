@@ -6,24 +6,10 @@ import {
   Box, 
   Card, 
   CardContent, 
-  Chip,
-  Button,
   Avatar,
-  Tab,
-  Tabs,
   IconButton,
-  Tooltip,
   LinearProgress,
-  Stack,
   Divider,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Alert,
-  Badge,
   FormControl,
   InputLabel,
   Select,
@@ -58,14 +44,7 @@ import {
 
 // Icons
 import InventoryIcon from '@mui/icons-material/Inventory';
-import PeopleIcon from '@mui/icons-material/People';
-import ReceiptIcon from '@mui/icons-material/Receipt';
-import WarningIcon from '@mui/icons-material/Warning';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import AssessmentIcon from '@mui/icons-material/Assessment';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import AddIcon from '@mui/icons-material/Add';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import ComputerIcon from '@mui/icons-material/Computer';
 import WebIcon from '@mui/icons-material/Web';
 import StorefrontIcon from '@mui/icons-material/Storefront';
@@ -75,12 +54,6 @@ import CampaignIcon from '@mui/icons-material/Campaign';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
-import SellIcon from '@mui/icons-material/Sell';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import PersonIcon from '@mui/icons-material/Person';
@@ -217,10 +190,10 @@ const Dashboard = () => {
   const theme = useTheme();
   const [timeRange, setTimeRange] = useState('month');
   const [salesStats, setSalesStats] = useState(null);
-  const [productStats, setProductStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [lowStockProducts, setLowStockProducts] = useState([]);
   const { currentUser } = useContext(AuthContext);
+  // eslint-disable-next-line no-unused-vars
   const navigate = useNavigate();
 
   const fetchDashboardData = useCallback(async () => {
