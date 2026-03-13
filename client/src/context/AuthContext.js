@@ -14,13 +14,29 @@ export const AuthProvider = ({ children }) => {
   // Check if user is logged in on page load
   useEffect(() => {
     const checkLoggedIn = async () => {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        try {
+          setCurrentUser(JSON.parse(storedUser));
+        } catch (e) {
+          localStorage.removeItem('user');
+        }
+      }
+
       try {
         const res = await api.get('/api/auth/me');
         if (res.data.success) {
-          setCurrentUser(res.data.data);
+          // Update stored user data if needed (role changes, etc)
+          const updatedUser = { ...JSON.parse(localStorage.getItem('user') || '{}'), ...res.data.data };
+          setCurrentUser(updatedUser);
+          localStorage.setItem('user', JSON.stringify(updatedUser));
         }
       } catch (err) {
         console.log('Not authenticated');
+        if (err.response?.status === 401) {
+          setCurrentUser(null);
+          localStorage.removeItem('user');
+        }
       } finally {
         setLoading(false);
       }
@@ -41,7 +57,9 @@ export const AuthProvider = ({ children }) => {
       
       const res = await api.post('/api/auth/login', loginData);
       if (res.data.success) {
-        setCurrentUser(res.data.data);
+        const userData = res.data.data;
+        setCurrentUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
         navigate('/');
         return true;
       }
@@ -49,6 +67,7 @@ export const AuthProvider = ({ children }) => {
       setError(err.response?.data?.message || 'Login failed');
       return false;
     }
+    return false;
   };
 
   // Register function
@@ -70,12 +89,15 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await api.get('/api/auth/logout');
-      setCurrentUser(null);
-      navigate('/login');
     } catch (err) {
       console.error('Logout error:', err);
+    } finally {
+      setCurrentUser(null);
+      localStorage.removeItem('user');
+      navigate('/login');
     }
   };
+
 
   // Clear error
   const clearError = () => {

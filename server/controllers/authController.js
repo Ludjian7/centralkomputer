@@ -1,4 +1,14 @@
 const { User, sequelize } = require('../models');
+const jwt = require('jsonwebtoken');
+
+// Helper to sign JWT
+const signToken = (id, role) => {
+  return jwt.sign(
+    { id, role }, 
+    process.env.JWT_SECRET || 'your_jwt_secret', 
+    { expiresIn: '1d' }
+  );
+};
 
 // Register a new user
 exports.register = async (req, res) => {
@@ -91,9 +101,8 @@ exports.login = async (req, res) => {
       });
     }
     
-    // Set session
-    req.session.userId = user.id;
-    req.session.userRole = user.role;
+    // Generate JWT token
+    const token = signToken(user.id, user.role);
     
     return res.status(200).json({
       success: true,
@@ -102,7 +111,8 @@ exports.login = async (req, res) => {
         id: user.id,
         username: user.username,
         email: user.email,
-        role: user.role
+        role: user.role,
+        token: token // Return token to frontend
       }
     });
     
@@ -118,41 +128,25 @@ exports.login = async (req, res) => {
 
 // Logout user
 exports.logout = (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).json({
-        success: false,
-        message: 'Failed to logout',
-        error: err.message
-      });
-    }
-    
-    res.clearCookie('connect.sid');
-    return res.status(200).json({
-      success: true,
-      message: 'Logout successful'
-    });
+  // Stateless JWT logout is handled on the client by deleting the token
+  return res.status(200).json({
+    success: true,
+    message: 'Logout successful'
   });
 };
 
 // Get current user
 exports.getCurrentUser = async (req, res) => {
   try {
-    if (!req.session.userId) {
-      return res.status(401).json({
-        success: false,
-        message: 'Not authenticated'
-      });
-    }
-    
-    const user = await User.findByPk(req.session.userId, {
+    // req.userId is set by the isAuthenticated middleware
+    const user = await User.findByPk(req.userId, {
       attributes: ['id', 'username', 'email', 'role']
     });
     
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'User not found'
+        message: 'User found'
       });
     }
     
@@ -169,4 +163,5 @@ exports.getCurrentUser = async (req, res) => {
       error: error.message
     });
   }
-}; 
+};
+ 
