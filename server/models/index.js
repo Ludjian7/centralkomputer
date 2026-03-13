@@ -69,9 +69,20 @@ SaleItem.belongsTo(User, {
 // Sync all models with database
 const syncModels = async () => {
   try {
-    await sequelize.query('PRAGMA foreign_keys = OFF');
-    await sequelize.sync();
-    await sequelize.query('PRAGMA foreign_keys = ON');
+    const isPostgres = !!process.env.POSTGRES_URL;
+
+    if (!isPostgres) {
+      // SQLite only: disable foreign keys during sync
+      await sequelize.query('PRAGMA foreign_keys = OFF');
+    }
+
+    // Use { alter: true } on Postgres to safely add missing columns
+    await sequelize.sync({ alter: isPostgres });
+
+    if (!isPostgres) {
+      await sequelize.query('PRAGMA foreign_keys = ON');
+    }
+
     console.log('All models were synchronized successfully.');
     return true;
   } catch (error) {
