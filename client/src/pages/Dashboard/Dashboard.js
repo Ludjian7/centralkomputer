@@ -24,7 +24,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
-import { StyledStatCard as _S, StyledDetailCard as _D, themeColors as _t } from '../../components/Layout/LayoutStyles';
+// LayoutStyles not imported (unused in this component)
 
 // Chart components
 import { Line, Pie } from 'react-chartjs-2';

@@ -10,10 +10,9 @@ import {
   Divider,
   Breadcrumbs,
   Link,
-  Paper,
-  useTheme as _useTheme,
-  useMediaQuery as _useMediaQuery
+  Paper
 } from '@mui/material';
+
 import InventoryIcon from '@mui/icons-material/Inventory';
 import PeopleIcon from '@mui/icons-material/People';
 import ReceiptIcon from '@mui/icons-material/Receipt';
