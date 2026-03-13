@@ -24,17 +24,17 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Database initialization
+// Database initialization (Sync only in development to save cold start time)
 const initDB = async () => {
   const connected = await testConnection();
   if (connected) {
-    await syncModels();
-  } else {
-    console.error('Database initialization skipped due to connection failure.');
+    if (process.env.NODE_ENV !== 'production') {
+      await syncModels();
+    }
   }
 };
-
 initDB();
+
 
 // API Routes
 app.use('/api', routes);

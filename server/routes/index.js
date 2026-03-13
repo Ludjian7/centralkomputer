@@ -6,7 +6,7 @@ const supplierRoutes = require('./supplierRoutes');
 const saleRoutes = require('./saleRoutes');
 const employeeRoutes = require('./employeeRoutes');
 
-const { User } = require('../models');
+const { User, syncModels } = require('../models');
 
 // Mount routes
 router.use('/auth', authRoutes);
@@ -20,8 +20,17 @@ router.get('/init-db', async (req, res) => {
   try {
     const results = [];
     
-    // Create admin user
+    // 1. Sync database (Create tables if missing)
+    results.push('Synchronizing database...');
+    const synced = await syncModels();
+    if (!synced) {
+        throw new Error('Database synchronization failed. Check your connection settings.');
+    }
+    results.push('Database sync complete.');
+    
+    // 2. Create admin user
     const adminExists = await User.findOne({ where: { username: 'admin' } });
+
     if (!adminExists) {
       await User.create({
         username: 'admin',
